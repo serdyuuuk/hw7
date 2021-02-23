@@ -1,0 +1,40 @@
+<% include common/header.ejs %>
+<div class="container-fluid col-lg-9 col-md-8 col-sm-7 col-xs-6">
+    <div class="row" id="pizza_list">
+        <div class="menu visible">
+            <div class="col-md-12 allPizzaLabel">Усі піци
+                <div class="rounded-circle numberLabel" id="pizzasAll">0</div>
+            </div>
+            <div class="typeOfPizza" data-toggle="buttons">
+                <label class="btn btn-warning active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Усі
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> М'ясні
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> З ананасами
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option4" autocomplete="off"> З грибами
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option5" autocomplete="off"> З морепродуктами
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option6" autocomplete="off"> Вега
+                </label>
+            </div>
+            <div class="pizzas">
+
+            </div>
+            <div class="infAboutCompany">
+                <div class="firstInf">Pizza.22 - практичний проект в межах курсу JavaScript в Києво-Могилянській
+                    Академії
+                </div>
+                <div class="secondInf">Доставка піци не здійснюється</div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include common/footer.ejs %>
