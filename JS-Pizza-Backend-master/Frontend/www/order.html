@@ -12,6 +12,7 @@
     <!-- LESS JavaScript компілятор -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDFffu7PjfDNvlrg1NGhhq7cJT9WXWvSuo"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-fixed-top col-lg-9 col-md-8 col-sm-7 col-xs-6  upPanel">
@@ -56,21 +57,26 @@
         </div>
         <div class="form-group" id="addressGroup">
             <label class="col-sm-2 col-lg-1 control-label">Адреса</label>
-            <div class="col-sm-10 col-lg-11">
-                <input class="form-control" id="inputAddress" placeholder="Місто Вулиця Квартира">
+            <div class="col-sm-8 col-lg-10">
+                <input class="form-control" id="inputAddress" placeholder="Натисніть Знайти для пошуку адреси">
             </div>
+            <div class="col-sm-2 col-lg-1 form-group" id="adButton">
+                <button type="button" class="btn btn-warning" id="findAddressButton">Знайти</button>
+            </div>
+            <div class="notVisible error" id="addressError">Доставка неможлива</div>
         </div>
     </form>
     <address>
         <br>
         <strong>Інформація про замовлення</strong><br><br>
-        <strong>Приблизний час доставки: </strong><h>невідомий</h><br><br>
-        <strong>Адреса доставки: </strong><h>невідома</h><br><br>
+        <strong>Приблизний час доставки: </strong><h id="timeDeliver">невідомий</h><br><br>
+        <strong>Адреса доставки: </strong><h id="addressDeliver">невідома</h><br><br>
     </address>
     <div class="buttonSend">
     <button type="button" class="btn btn-warning" id="sendInfo">Далі ></button>
     </div>
     <div id="map"></div>
+    <div id="liqpay"></div>
 </div>
 </div>
 <div class="sale">
@@ -94,6 +100,7 @@
         </div>
     </div>
 </div>
+<script src="//static.liqpay.ua/libjs/checkout.js" async></script>
 <!-- jQuery JavaScript -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 

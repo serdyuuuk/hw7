@@ -356,6 +356,14 @@ function phoneCheck(numb) {
     return false;
 }
 
+function addressCheck(address) {
+    if (address != "невідома"){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 $("#inputPhone").on("input", function f() {
     var phone = $("#inputPhone").val();
     if (phoneCheck(phone)) {
@@ -369,7 +377,6 @@ $("#inputPhone").on("input", function f() {
         $("#phoneError").removeClass("notVisible");
         $("#phoneError").addClass("visible");
     }
-
 });
 $("#inputName").on("input", function f() {
     var name = $("#inputName").val();
@@ -395,27 +402,78 @@ exports.set = function (key, value) {
 }
 
 function sendToServer(error, data) {
+    if(error === null) {
+        LiqPayCheckout.init({
+            data: data.data,
+            signature:data.signature,
+            embedTo: "#liqpay",
+            mode: "popup"
+        }).on("liqpay.callback", function(data){
+            console.log(data.status);
+            console.log(data);
+        }).on("liqpay.ready", function(data){
+        }).on("liqpay.close", function(data){
+            basil.set("cartSt",[])
+            window.location.href = thisUrl;
+        });
+    }
 }
 
 $("#sendInfo").click(function () {
     var name = $("#inputName").val();
     var phone = $("#inputPhone").val();
-    var address = $("#inputAddress").val();
-    if (nameCheck(name) && phoneCheck(phone)) {
+    var address = $("#addressDeliver").text();
+    if (nameCheck(name)) {
+        $("#nameGroup").removeClass("has-error");
+        $("#nameGroup").addClass("has-success");
+        $("#nameError").removeClass("visible");
+        $("#nameError").addClass("notVisible");
+    } else {
+        $("#nameGroup").removeClass("has-success");
+        $("#nameGroup").addClass("has-error");
+        $("#nameError").removeClass("notVisible");
+        $("#nameError").addClass("visible");
+    }
+    if (phoneCheck(phone)) {
+        $("#phoneGroup").removeClass("has-error");
+        $("#phoneGroup").addClass("has-success");
+        $("#phoneError").removeClass("visible");
+        $("#phoneError").addClass("notVisible");
+    } else {
+        $("#phoneGroup").removeClass("has-success");
+        $("#phoneGroup").addClass("has-error");
+        $("#phoneError").removeClass("notVisible");
+        $("#phoneError").addClass("visible");
+    }
+    if (addressCheck(address)){
+        $("#addressGroup").removeClass("has-error");
+        $("#addressGroup").addClass("has-success");
+        $("#addressError").removeClass("visible");
+        $("#addressError").addClass("notVisible");
+    } else {
+        $("#addressGroup").removeClass("has-success");
+        $("#addressGroup").addClass("has-error");
+        $("#addressError").removeClass("notVisible");
+        $("#addressError").addClass("visible");
+    }
+    if (nameCheck(name) && phoneCheck(phone) && addressCheck(address)) {
         var orderPizzas = [];
+        var price = 0;
         basil.get("cartSt").forEach(element => {
             var onePizza = {
                 pizza: element.pizza.title,
                 size: element.size,
                 quantity: element.quantity
             }
+            price += element.pizza[element.size].price * element.quantity;
             orderPizzas.push(onePizza);
         });
         var data = {
             name: name,
             phone: phone,
             address: address,
-            pizzas: orderPizzas
+            pizzas: orderPizzas,
+            price: price
         }
         API.createOrder(data, sendToServer)
     }
